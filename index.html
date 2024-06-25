@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Bidding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Car Bidding Auction</h1>
+        <div id="auction">
+            <div id="current-car">
+                <h2 id="car-name">Waiting for auction...</h2>
+                <p id="timer">Time: 0</p>
+            </div>
+            <ul id="bids"></ul>
+        </div>
+        <div id="bid-form">
+            <input type="text" id="userId" placeholder="User ID">
+            <input type="number" id="amount" placeholder="Bid Amount">
+            <button onclick="placeBid()">Place Bid</button>
+        </div>
+    </div>
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === 'new_auction') {
+                document.getElementById('car-name').innerText = `Current Car: ${data.car.name}`;
+                document.getElementById('timer').innerText = `Time: ${data.time}`;
+                document.getElementById('bids').innerHTML = '';
+            } else if (data.type === 'new_bid') {
+                const bidList = document.getElementById('bids');
+                const bidItem = document.createElement('li');
+                bidItem.innerText = `User ${data.bids[data.bids.length - 1].userId}: $${data.bids[data.bids.length - 1].amount}`;
+                bidList.appendChild(bidItem);
+            } else if (data.type === 'auction_end') {
+                alert(`Auction ended for car ${data.carId}. Sold: ${data.sold ? 'Yes' : 'No'}`);
+            } else if (data.type === 'timer_update') {
+                document.getElementById('timer').innerText = `Time: ${data.time}`;
+            }
+        };
+
+        function placeBid() {
+            const userId = document.getElementById('userId').value;
+            const amount = document.getElementById('amount').value;
+            ws.send(JSON.stringify({ type: 'bid', userId, amount }));
+        }
+    </script>
+</body>
+</html>
