@@ -30,7 +30,7 @@ const auctions = [
 
 let currentAuctionIndex = 0;
 let currentCarIndex = 0;
-const auctionTime = 1000; // seconds
+const auctionTime = 100000000; // seconds
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
