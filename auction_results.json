@@ -5,37 +5,8 @@
       {
         "id": 1,
         "name": "Car 1",
-        "bids": [
-          {
-            "userId": "w22",
-            "amount": ""
-          },
-          {
-            "userId": "w22",
-            "amount": "333"
-          },
-          {
-            "userId": "w22",
-            "amount": "333"
-          },
-          {
-            "userId": "",
-            "amount": ""
-          },
-          {
-            "userId": "",
-            "amount": ""
-          },
-          {
-            "userId": "22",
-            "amount": "22"
-          },
-          {
-            "userId": "22",
-            "amount": "22"
-          }
-        ],
-        "sold": true
+        "bids": [],
+        "sold": false
       }
     ]
   },

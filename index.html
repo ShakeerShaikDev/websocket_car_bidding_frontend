@@ -23,7 +23,7 @@
         </div>
     </div>
     <script>
-        const ws = new WebSocket('ws://localhost:8080');
+        const ws = new WebSocket('ws://https://websocket-car-bidding-frontend.onrender.com/');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
